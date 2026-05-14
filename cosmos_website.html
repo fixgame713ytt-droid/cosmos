@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КОСМОС — Безмежний Всесвіт</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #04071a;
+    --bg2: #070d2a;
+    --card: #0d1538;
+    --teal: #00e5ff;
+    --gold: #ffc947;
+    --purple: #a78bfa;
+    --text: #cdd8f0;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Exo 2', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* STARS BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(1px 1px at 10% 15%, #fff 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 8%, #fff 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 55%, #fff 0%, transparent 100%),
+      radial-gradient(2px 2px at 80% 20%, rgba(0,229,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 70%, #fff 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 85%, #fff 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 60% 90%, rgba(167,139,250,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 10%, #fff 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 45%, rgba(255,201,71,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 60%, #fff 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 25%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 65% 75%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(2px 2px at 50% 50%, rgba(0,229,255,0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAVIGATION */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(4, 7, 26, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0,229,255,0.15);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--teal);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 0.3rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--teal);
+    background: rgba(0,229,255,0.08);
+    border-color: rgba(0,229,255,0.3);
+  }
+
+  /* PAGE SECTIONS */
+  .page { display: none; padding-top: 64px; min-height: 100vh; position: relative; z-index: 1; }
+  .page.active { display: block; animation: fadeIn 0.6s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,229,255,0.06) 0%, transparent 70%);
+  }
+
+  .hero-badge {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: var(--teal);
+    text-transform: uppercase;
+    border: 1px solid rgba(0,229,255,0.4);
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    animation: pulse-border 2.5s infinite;
+  }
+
+  @keyframes pulse-border {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,229,255,0.3); }
+    50% { box-shadow: 0 0 0 8px rgba(0,229,255,0); }
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    color: var(--white);
+    text-shadow: 0 0 60px rgba(0,229,255,0.4);
+  }
+
+  .hero h1 .highlight { color: var(--teal); }
+  .hero h1 .gold { color: var(--gold); }
+
+  .hero p {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 300;
+    max-width: 640px;
+    line-height: 1.8;
+    color: rgba(205,216,240,0.8);
+    margin-bottom: 3rem;
+  }
+
+  .hero-btn {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--teal), #0099cc);
+    color: #000;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 30px rgba(0,229,255,0.3);
+  }
+
+  .hero-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 50px rgba(0,229,255,0.5);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 4rem;
+    margin-top: 4rem;
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .stat-label { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(205,216,240,0.5); margin-top: 4px; }
+
+  /* SECTION STYLES */
+  .section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .section-title span { color: var(--teal); }
+  .section-sub {
+    color: rgba(205,216,240,0.5);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+  .divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    margin: 1rem 0 3rem;
+  }
+
+  /* CARDS */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(0,229,255,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--purple));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0,229,255,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .card h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+  .card p { font-size: 0.9rem; line-height: 1.7; color: rgba(205,216,240,0.7); }
+
+  /* PLANET GRID */
+  .planet-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+
+  .planet-card {
+    background: var(--card);
+    border: 1px solid rgba(0,229,255,0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .planet-card:hover { transform: translateY(-8px); box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+
+  .planet-visual {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+  }
+
+  .planet-info { padding: 1.25rem; }
+  .planet-info h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .planet-info p { font-size: 0.82rem; line-height: 1.65; color: rgba(205,216,240,0.65); }
+  .planet-tag {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  /* VIDEO */
+  .video-section { margin: 3rem 0; }
+  .video-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .video-wrap {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0,229,255,0.2);
+    box-shadow: 0 0 60px rgba(0,0,0,0.5);
+    aspect-ratio: 16/9;
+  }
+  .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--teal), var(--purple), transparent);
+  }
+  .tl-item { position: relative; margin-bottom: 2.5rem; }
+  .tl-dot {
+    position: absolute;
+    left: -2rem;
+    top: 4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 16px rgba(0,229,255,0.6);
+    border: 3px solid var(--bg);
+  }
+  .tl-year {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 0.3rem;
+  }
+  .tl-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .tl-text { font-size: 0.88rem; color: rgba(205,216,240,0.65); line-height: 1.7; }
+
+  /* FACTS */
+  .facts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .fact-card {
+    background: var(--card);
+    border: 1px solid rgba(167,139,250,0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    transition: all 0.3s;
+  }
+  .fact-card:hover { border-color: rgba(167,139,250,0.5); transform: translateY(-4px); }
+  .fact-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: rgba(167,139,250,0.3);
+    line-height: 1;
+    min-width: 50px;
+  }
+  .fact-content h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 0.5rem; }
+  .fact-content p { font-size: 0.88rem; line-height: 1.7; color: rgba(205,216,240,0.65); }
+
+  /* PHOTO GRID */
+  .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .photo-item {
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 1;
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    border: 1px solid rgba(0,229,255,0.08);
+    transition: all 0.3s;
+    position: relative;
+  }
+  .photo-item:hover { transform: scale(1.03); border-color: rgba(0,229,255,0.3); }
+  .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(4,7,26,0.9) 0%, transparent 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .photo-item:hover .photo-overlay { opacity: 1; }
+  .photo-overlay span { font-size: 0.8rem; font-weight: 600; color: var(--teal); letter-spacing: 1px; }
+
+  /* INFO BOX */
+  .info-box {
+    background: linear-gradient(135deg, rgba(0,229,255,0.06), rgba(167,139,250,0.04));
+    border: 1px solid rgba(0,229,255,0.15);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+  .info-box h3 { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--teal); margin-bottom: 1rem; }
+  .info-box p { font-size: 0.92rem; line-height: 1.8; color: rgba(205,216,240,0.8); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid rgba(0,229,255,0.08);
+    position: relative; z-index: 1;
+  }
+  footer p { font-size: 0.8rem; color: rgba(205,216,240,0.3); letter-spacing: 2px; }
+  footer .logo-f { font-family: 'Orbitron', sans-serif; color: var(--teal); font-size: 0.9rem; margin-bottom: 0.5rem; }
+
+  .bg-glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow1 { width: 600px; height: 600px; background: rgba(0,229,255,0.04); top: -200px; right: -200px; }
+  .glow2 { width: 500px; height: 500px; background: rgba(167,139,250,0.04); bottom: -200px; left: -200px; }
+
+  @media (max-width: 600px) {
+    .hero-stats { gap: 2rem; }
+    .stat-num { font-size: 1.5rem; }
+    .nav-links a { font-size: 0.65rem; padding: 6px 8px; letter-spacing: 0.5px; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow glow1"></div>
+<div class="bg-glow glow2"></div>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">КОС<span>МОС</span></div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" class="active" id="nav-home">🏠 Головна</a></li>
+    <li><a onclick="showPage('solar')" id="nav-solar">🪐 Сонячна система</a></li>
+    <li><a onclick="showPage('stars')" id="nav-stars">⭐ Зірки</a></li>
+    <li><a onclick="showPage('explore')" id="nav-explore">🚀 Дослідження</a></li>
+    <li><a onclick="showPage('facts')" id="nav-facts">💡 Факти</a></li>
+  </ul>
+</nav>
+
+<!-- ======================== PAGE 1: HOME ======================== -->
+<section class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-badge">🛰 Ласкаво просимо до Всесвіту</div>
+    <h1>Безмежний<br><span class="highlight">КОСМОС</span><br>чекає на <span class="gold">тебе</span></h1>
+    <p>Всесвіт — це не просто простір між зірками. Це колиска таємниць, де народжуються і гинуть зірки, де час та простір переплітаються у нескінченному танці.</p>
+    <button class="hero-btn" onclick="showPage('solar')">Почати подорож →</button>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">13,8</div>
+        <div class="stat-label">млрд років</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2 трлн</div>
+        <div class="stat-label">галактик</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">можливостей</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-sub">— Що таке космос</p>
+    <h2 class="section-title">Вступ до <span>Всесвіту</span></h2>
+    <div class="divider"></div>
+    <div class="info-box">
+      <h3>🌌 Що таке космос?</h3>
+      <p>Космос — це весь простір, що існує за межами атмосфери Землі. Він включає планети, зірки, галактики, туманності, темну матерію та темну енергію. Розмір Всесвіту настільки великий, що навіть при подорожі зі швидкістю світла (300 000 км/с) знадобляться мільярди років, щоб перетнути його. Вчені оцінюють вік Всесвіту у 13,8 мільярда років — саме стільки минуло з моменту Великого вибуху.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🌌</div>
+        <h3>Галактики</h3>
+        <p>Велетенські зоряні системи з мільярдами зірок. Наша галактика — Чумацький Шлях — містить понад 200 мільярдів зірок і має діаметр близько 100 000 світлових років.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⭐</div>
+        <h3>Зірки</h3>
+        <p>Гігантські плазмові кулі, що горять завдяки ядерному синтезу. Наше Сонце — типова зірка середнього розміру. Але деякі зірки у мільярди разів більші!</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🪐</div>
+        <h3>Планети</h3>
+        <p>Небесні тіла, що обертаються навколо зірок. У нашій Сонячній системі — 8 планет. Але науковці вже відкрили тисячі екзопланет в інших зоряних системах.</p>
+      </div>
+    </div>
+
+    <div class="video-section" style="margin-top:4rem;">
+      <div class="video-title">▶ Відео: Чумацький шлях — наша галактика</div>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/nH2K9lCHha8" title="Milky Way" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="logo-f">КОСМОС — Безмежний Всесвіт</div>
+    <p>Навчальний проєкт · 2024</p>
+  </footer>
+</section>
+
+<!-- ======================== PAGE 2: SOLAR SYSTEM ======================== -->
+<section class="page" id="page-solar">
+  <div class="section">
+    <p class="section-sub">— Наш космічний дім</p>
+    <h2 class="section-title">🪐 Сонячна <span>система</span></h2>
+    <div class="divider"></div>
+    <div class="info-box">
+      <h3>☀️ Про нашу Сонячну систему</h3>
+      <p>Сонячна система утворилася близько 4,6 мільярда років тому з хмари газу та пилу. У центрі — Сонце, яке містить 99,86% усієї маси системи. Навколо нього обертаються 8 планет, сотні місяців, мільйони астероїдів та мільярди комет. Відстань від Землі до Сонця становить близько 150 мільйонів кілометрів — цю відстань називають Астрономічна одиниця (AU).</p>
+    </div>
+
+    <div class="planet-grid">
+      <div class="planet-card">
+        <div class="planet-visual" style="background: linear-gradient(135deg,#2a1a00,#8b4513);">☿</div>
+        <div class="planet-info">
+          <h3>Меркурій</h3>
+          <p>Найменша та найближча до Сонця планета. Тут немає атмосфери, а перепади температур — від -180°C до +430°C.</p>
+          <span class="planet-tag" style="background:rgba(139,69,19,0.3);color:#cd853f;">1-а планета</span>
+        </div>
+      </div>
+      <div class="planet-card">
+        <div class="planet-visual" style="background: linear-gradient(135deg,#2a1500,#cc7722);">♀</div>
+        <div class="planet-info">
+          <h3>Венера</h3>
+          <p>Найгарячіша планета (+465°C). Обертається у зворотному напрямку. Вкрита щільними хмарами сірчаної кислоти.</p>
+          <span class="planet-tag" style="background:rgba(204,119,34,0.3);color:#ffa500;">2-а планета</span>
+        </div>
+      </div>
+      <div class="planet-card">
+        <div class="planet-visual" style="background: linear-gradient(135deg,#001a4d,#006994);">🌍</div>
+        <div class="planet-info">
+          <h3>Земля</h3>
+          <p>Наш дім! Єдина відома планета з рідкою водою на поверхні та розвиненим життям. Має один природний супутник — Місяць.</p>
+          <span class="planet-tag" style="background:rgba(0,105,148,0.3);color:#00e5ff;">3-я планета</span>
+        </div>
+      </div>
+      <div class="planet-card">
+        <div class="planet-visual" style="background: linear-gradient(135deg,#3d0000,#8b1a1a);">♂</div>
+        <div class="planet-info">
+          <h3>Марс</h3>
+          <p>«Червона планета» з найбільшим вулканом у Сонячній системі — Олімп (21 км). Активно досліджується марсоходами.</p>
+          <span class="planet-tag" style="background:rgba(139,26,26,0.3);color:#ff6b6b;">4-а планета</span>
+        </div>
+      </div>
+      <div class="planet-card">
+        <div class="planet-visual" style="background: linear-gradient(135deg,#2a1500,#c8860a);">♃</div>
+        <div class="planet-info">
+          <h3>Юпітер</h3>
+          <p>Найбільша планета — у 11 разів більша за Землю. Велика Червона Пляма — гігантський шторм, що існує понад 400 років.</p>
+          <span class="planet-tag" style="background:rgba(200,134,10,0.3);color:#ffc947;">5-а планета</span>
+        </div>
+      </div>
+      <div class="planet-card">
+        <div class="planet-visual" style="background: linear-gradient(135deg,#1a1a00,#b8a040);">🪐</div>
+        <div class="planet-info">
+          <h3>Сатурн</h3>
+          <p>Планета з красивими кільцями з льоду та каміння. Настільки легка, що могла б плавати у воді! Має 146 відомих місяців.</p>
+          <span class="planet-tag" style="background:rgba(184,160,64,0.3);color:#e6d03c;">6-а планета</span>
+        </div>
+      </div>
+      <div class="planet-card">
+        <div class="planet-visual" style="background: linear-gradient(135deg,#001a2a,#4fd9f5);">⛢</div>
+        <div class="planet-info">
+          <h3>Уран</h3>
+          <p>«Крижаний гігант» блакитно-зеленого кольору. Обертається «лежачи» на боці — нахил осі 98°. Температура -224°C.</p>
+          <span class="planet-tag" style="background:rgba(79,217,245,0.2);color:#4fd9f5;">7-а планета</span>
+        </div>
+      </div>
+      <div class="planet-card">
+        <div class="planet-visual" style="background: linear-gradient(135deg,#000d3d,#3f5fff);">♆</div>
+        <div class="planet-info">
+          <h3>Нептун</h3>
+          <p>Найдальша планета з вітрами до 2100 км/год. Один оберт навколо Сонця займає 165 земних років. Яскраво-синій колір.</p>
+          <span class="planet-tag" style="background:rgba(63,95,255,0.3);color:#7b9fff;">8-а планета</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-section" style="margin-top:4rem;">
+      <div class="video-title">▶ Відео: Сонячна система — подорож планетами</div>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/libKVRa01L8" title="Solar System" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="logo-f">КОСМОС — Безмежний Всесвіт</div>
+    <p>Навчальний проєкт · 2024</p>
+  </footer>
+</section>
+
+<!-- ======================== PAGE 3: STARS ======================== -->
+<section class="page" id="page-stars">
+  <div class="section">
+    <p class="section-sub">— Зоряне небо</p>
+    <h2 class="section-title">⭐ Зірки та <span>Галактики</span></h2>
+    <div class="divider"></div>
+
+    <div class="info-box">
+      <h3>🔭 Як народжуються зірки?</h3>
+      <p>Зірки утворюються в туманностях — гігантських хмарах газу та пилу. Під дією сили тяжіння газ стискається, температура в центрі зростає до мільйонів градусів і запускається ядерний синтез — водень перетворюється на гелій з виділенням колосальної енергії. Так народжується зірка! Наше Сонце живе вже 4,6 мільярда років і перебуває в середині свого «зоряного життя».</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🌟</div>
+        <h3>Наше Сонце</h3>
+        <p>Жовтий карлик спектрального класу G. Діаметр — 1,4 млн км (у 109 разів більший за Землю). Температура поверхні — ~5500°C, ядра — ~15 млн°C.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔴</div>
+        <h3>Червоні гіганти</h3>
+        <p>Зірки на кінці свого «життя». Бетельгейзе у сузір'ї Оріона — червоний надгігант, у 700 разів більший за Сонце. Скоро вибухне як наднова!</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💀</div>
+        <h3>Чорні діри</h3>
+        <p>Залишки масивних зірок після вибуху наднової. Гравітація настільки сильна, що навіть світло не може вирватися. В центрі нашої галактики — чорна діра Стрілець A*.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💫</div>
+        <h3>Нейтронні зірки</h3>
+        <p>Надщільні залишки зірок. Чайна ложка матерії нейтронної зірки важить мільярд тонн! Деякі обертаються сотні разів на секунду — пульсари.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌌</div>
+        <h3>Чумацький Шлях</h3>
+        <p>Наша галактика — спіральна, з діаметром ~100 000 світлових років. Містить 200–400 мільярдів зірок. Земля знаходиться на одному зі спіральних рукавів.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔭</div>
+        <h3>Туманності</h3>
+        <p>Газово-пилові хмари — колиска нових зірок. Найвідоміші: Туманність Оріона, Крабоподібна туманність, туманність Орла («Стовпи творення»).</p>
+      </div>
+    </div>
+
+    <div class="video-section" style="margin-top:4rem;">
+      <div class="video-title">▶ Відео: Телескоп Хаббл — найкрасивіші знімки космосу</div>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/oAVjF_7ensg" title="Hubble" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem;">
+      <h3 style="font-family:'Orbitron',sans-serif;font-size:1.2rem;color:var(--white);margin-bottom:1.5rem;">🖼 Краса Всесвіту</h3>
+      <div class="photo-grid">
+        <div class="photo-item" style="background:linear-gradient(135deg,#0a0020,#3d0080);">
+          🌌
+          <div class="photo-overlay"><span>Галактика</span></div>
+        </div>
+        <div class="photo-item" style="background:linear-gradient(135deg,#001a1a,#006666);">
+          🔭
+          <div class="photo-overlay"><span>Туманність</span></div>
+        </div>
+        <div class="photo-item" style="background:linear-gradient(135deg,#1a0800,#804000);">
+          ⭐
+          <div class="photo-overlay"><span>Зоряне скупчення</span></div>
+        </div>
+        <div class="photo-item" style="background:linear-gradient(135deg,#000814,#001f5e);">
+          💫
+          <div class="photo-overlay"><span>Нейтронна зірка</span></div>
+        </div>
+        <div class="photo-item" style="background:linear-gradient(135deg,#0a001a,#2d0065);">
+          🕳
+          <div class="photo-overlay"><span>Чорна діра</span></div>
+        </div>
+        <div class="photo-item" style="background:linear-gradient(135deg,#001400,#004d00);">
+          🌟
+          <div class="photo-overlay"><span>Наднова</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="logo-f">КОСМОС — Безмежний Всесвіт</div>
+    <p>Навчальний проєкт · 2024</p>
+  </footer>
+</section>
+
+<!-- ======================== PAGE 4: EXPLORATION ======================== -->
+<section class="page" id="page-explore">
+  <div class="section">
+    <p class="section-sub">— Людина і космос</p>
+    <h2 class="section-title">🚀 Дослідження <span>космосу</span></h2>
+    <div class="divider"></div>
+    <div class="info-box">
+      <h3>🛸 Ера космічних досліджень</h3>
+      <p>Людство почало підкорювати космос у XX столітті. З 1957 року, коли СРСР запустив перший штучний супутник Землі «Супутник-1», розпочалася «Космічна гонка». Сьогодні в космосі постійно перебувають астронавти на Міжнародній космічній станції (МКС), а нові компанії — SpaceX, Blue Origin, Virgin Galactic — роблять космічні подорожі доступнішими.</p>
+    </div>
+
+    <h3 style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:var(--gold);margin-bottom:2rem;margin-top:1rem;">📅 Хронологія підкорення космосу</h3>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">1957</div>
+        <div class="tl-title">Перший супутник — «Супутник-1»</div>
+        <div class="tl-text">СРСР вивів на орбіту перший штучний супутник Землі. Радіосигнал «біп-біп» почула вся планета. Початок космічної ери!</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--gold);box-shadow:0 0 16px rgba(255,201,71,0.6);"></div>
+        <div class="tl-year">1961</div>
+        <div class="tl-title">Перша людина в космосі — Юрій Гагарін</div>
+        <div class="tl-text">108 хвилин — і Гагарін облетів Землю на кораблі «Восток». «Поїхали!» — ці слова назавжди увійшли в історію.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--purple);box-shadow:0 0 16px rgba(167,139,250,0.6);"></div>
+        <div class="tl-year">1969</div>
+        <div class="tl-title">Перша людина на Місяці — Нейл Армстронг</div>
+        <div class="tl-text">«Це один маленький крок для людини, але величезний стрибок для всього людства». Місія «Аполлон-11» змінила світ.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">1990</div>
+        <div class="tl-title">Телескоп «Хаббл» — очі людства у космосі</div>
+        <div class="tl-text">Вийшовши за межі атмосфери, «Хаббл» надіслав тисячі неймовірних знімків галактик, туманностей і зірок.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--gold);box-shadow:0 0 16px rgba(255,201,71,0.6);"></div>
+        <div class="tl-year">1998–сьогодні</div>
+        <div class="tl-title">МКС — міжнародна космічна станція</div>
+        <div class="tl-text">Постійно населена з 2000 року. Астронавти з різних країн живуть і працюють у космосі, проводячи наукові дослідження.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#ff6b6b;box-shadow:0 0 16px rgba(255,107,107,0.6);"></div>
+        <div class="tl-year">2012–2024</div>
+        <div class="tl-title">SpaceX революціонізує космічні польоти</div>
+        <div class="tl-text">Ілон Маск і SpaceX вперше посадили орбітальну ракету назад! Багаторазові ракети Falcon 9 та Starship відкривають нову еру.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--purple);box-shadow:0 0 16px rgba(167,139,250,0.6);"></div>
+        <div class="tl-year">2021–сьогодні</div>
+        <div class="tl-title">Телескоп «Джеймс Вебб» — нове вікно у Всесвіт</div>
+        <div class="tl-text">Найпотужніший космічний телескоп в історії. Бачить галактики, що утворилися лише через 300 мільйонів років після Великого вибуху.</div>
+      </div>
+    </div>
+
+    <div class="video-section" style="margin-top:4rem;">
+      <div class="video-title">▶ Відео: SpaceX — майбутнє космічних польотів</div>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/ANv5UfZsvZQ" title="SpaceX Falcon Heavy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="logo-f">КОСМОС — Безмежний Всесвіт</div>
+    <p>Навчальний проєкт · 2024</p>
+  </footer>
+</section>
+
+<!-- ======================== PAGE 5: FACTS ======================== -->
+<section class="page" id="page-facts">
+  <div class="section">
+    <p class="section-sub">— Неймовірне поруч</p>
+    <h2 class="section-title">💡 Дивовижні <span>факти</span></h2>
+    <div class="divider"></div>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="fact-num">01</div>
+        <div class="fact-content">
+          <h3>Сонце — гігантська зірка</h3>
+          <p>Усередині Сонця могло б поміститися 1,3 мільйона Земель. Але серед зірок воно є середнього розміру — є зірки у тисячі разів більші!</p>
+        </div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">02</div>
+        <div class="fact-content">
+          <h3>Всесвіт постійно розширюється</h3>
+          <p>Після Великого вибуху Всесвіт не зупинився — він продовжує розширюватися і прискорюється! Галактики летять одна від одної.</p>
+        </div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">03</div>
+        <div class="fact-content">
+          <h3>Зірки «мерехтять» лише на Землі</h3>
+          <p>З космосу зірки не мерехтять — вони світять рівно. Мерехтіння виникає через тремтіння повітря в атмосфері Землі.</p>
+        </div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">04</div>
+        <div class="fact-content">
+          <h3>Місяць віддаляється від Землі</h3>
+          <p>Щороку Місяць відступає від нас на 3,8 сантиметри. Колись він був значно ближчим — через це дні на Землі були набагато коротшими.</p>
+        </div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">05</div>
+        <div class="fact-content">
+          <h3>У космосі панує тиша</h3>
+          <p>Звук — це коливання молекул. У вакуумі космосу майже немає молекул, тому звук не розповсюджується. Вибухи в космосі — беззвучні.</p>
+        </div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">06</div>
+        <div class="fact-content">
+          <h3>Венера — найгарячіша планета</h3>
+          <p>Хоча Меркурій ближче до Сонця, Венера гарячіша (+465°C) через парниковий ефект щільної CO₂-атмосфери. Свинець там тече як вода!</p>
+        </div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">07</div>
+        <div class="fact-content">
+          <h3>Людський організм у космосі змінюється</h3>
+          <p>Без гравітації кістки слабшають, м'язи атрофуються, а рідина переміщається в голову. Астронавти «ростуть» на 2–5 см у невагомості!</p>
+        </div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">08</div>
+        <div class="fact-content">
+          <h3>Темна матерія — невидима більшість</h3>
+          <p>Все, що ми бачимо у Всесвіті — зірки, планети, газ — лише 5% його маси. 27% — темна матерія, 68% — темна енергія. Ми не знаємо, що це!</p>
+        </div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">09</div>
+        <div class="fact-content">
+          <h3>Марс має найвищий вулкан</h3>
+          <p>Олімп на Марсі — висота 21 км і 600 км у діаметрі. Вдвічі вищий за Еверест! З вершини вулкана видно край атмосфери планети.</p>
+        </div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">10</div>
+        <div class="fact-content">
+          <h3>Ми всі зроблені з зоряного пилу</h3>
+          <p>Атоми вуглецю, кисню, заліза у нашому тілі утворилися в ядрах давніх зірок, що вибухнули мільярди років тому. Ми — діти зірок!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-section" style="margin-top:4rem;">
+      <div class="video-title">▶ Відео: Дивовижні факти про космос (укр.)</div>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/HdPzOWlLrbE" title="Cosmic Facts" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="logo-f">КОСМОС — Безмежний Всесвіт</div>
+    <p>Навчальний проєкт · 2024</p>
+  </footer>
+</section>
+
+<script>
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    document.getElementById('nav-' + name).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
